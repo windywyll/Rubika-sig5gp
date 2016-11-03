@@ -13,6 +13,12 @@ namespace CardBattle
 
             Console.WriteLine("Created card : " + c.ToString());
 
+            CardDealer dealer = new CardDealer();
+
+            c = dealer.randomCard();
+
+            Console.WriteLine("Random Card : " + c.ToString());
+
             Console.ReadLine();
         }
     }

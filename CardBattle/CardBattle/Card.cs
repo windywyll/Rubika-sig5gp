@@ -7,8 +7,8 @@ namespace CardBattle
 {
     class Card
     {
-        public ValueCard value { get; set; }
-        public ColorEnum color { get; set; }
+        public ValueCard value { get; private set; }
+        public ColorEnum color { get; private set; }
 
         public Card(ValueCard _val, ColorEnum _col)
         {
