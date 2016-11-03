@@ -11,8 +11,8 @@ namespace CardBattle
         static void Main(string[] args)
         {
             var spadesAce = new Card(Values.Ace, Suit.Spades);
-
-
+            
+            Console.WriteLine("I created a card: " + spadesAce);
 
             Console.ReadLine();
         }

@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CardDealer.cs" />
     <Compile Include="Models\Card.cs" />
     <Compile Include="Models\Suit.cs" />
     <Compile Include="Models\Values.cs" />

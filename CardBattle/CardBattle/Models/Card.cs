@@ -9,12 +9,20 @@ namespace CardBattle.Models
     {
         public Card(Values value, Suit suit)
         {
-            Suit = suit;
+            _suit = suit;
             Value = value;
         }
 
-        public Suit Suit { get; set; }
-        public Values Value { get; set; }
+        private readonly Suit _suit;
+        public Suit Suit
+        {
+            get
+            {
+                return _suit;
+            }
+        }
+
+        public Values Value { get; private set; }
 
         public override string ToString()
         {
