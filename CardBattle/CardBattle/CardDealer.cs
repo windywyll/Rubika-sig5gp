@@ -5,24 +5,86 @@ using System.Text;
 
 namespace CardBattle
 {
-    class CardDealer
+    public class CardDealer
     {
-        Array randCol, randVal;
-        Random rand;
+        private readonly Random rand = new Random();
+        private static readonly int suitsCount = Enum.GetValues(typeof(ColorEnum)).Length;
+        private static readonly int valuesCount = Enum.GetValues(typeof(ValueCard)).Length;
+        private List<Card> deck;
 
         public CardDealer()
         {
-            randCol = Enum.GetValues(typeof(ColorEnum));
-            randVal = Enum.GetValues(typeof(ValueCard));
-            rand = new Random();
+            createDeck();
+        }
+
+        public void regenerateDeck()
+        {
+            createDeck();
+        }
+
+        private void createDeck()
+        {
+            deck = new List<Card>();
+            
+            foreach(ColorEnum col in Enum.GetValues(typeof(ColorEnum)))
+            {
+                foreach (ValueCard val in Enum.GetValues(typeof(ValueCard)))
+                {
+                    deck.Add(new Card(val, col));
+                }
+            }
         }
 
         public Card randomCard()
         {
-            ColorEnum _colorRandCard = (ColorEnum)randCol.GetValue(rand.Next(randCol.Length));
-            ValueCard _valueRandCard = (ValueCard)randVal.GetValue(rand.Next(randVal.Length));
+            var suit = (ColorEnum) rand.Next(suitsCount);
+            var value = (ValueCard) rand.Next(valuesCount);
 
-            return new Card(_valueRandCard, _colorRandCard);
+            return new Card(value, suit);
+        }
+
+        /*public List<Card> Deal(int n)
+        {
+            List<Card> hand = new List<Card>();
+            Card temp;
+            bool alreadyInHand;
+
+            for(int i = 0; i < n; i++)
+            {
+                alreadyInHand = true;
+
+                while(alreadyInHand)
+                {
+                    temp = randomCard();
+                    if (!hand.Contains(temp))
+                    {
+                        alreadyInHand = false;
+                        hand.Add(temp);
+                    }
+                }
+            }
+
+            return hand;
+        }*/
+
+        public List<Card> Deal(int n)
+        {
+            List<Card> hand = new List<Card>();
+            int index;
+
+            if(n > deck.Count)
+            {
+                throw new ArgumentException("not enough card in deck");
+            }
+
+            for(int i = 0; i < n; i++)
+            {
+                index = rand.Next(deck.Count);
+                hand.Add(deck[index]);
+                deck.RemoveAt(index);
+            }
+
+            return hand;
         }
     }
 }
