@@ -7,6 +7,11 @@ namespace CardBattle.Models
 {
     public enum Values
     {
+        Two,
+        Three,
+        Four,
+        Five,
+        Six,
         Seven,
         Eight,
         Nine,
