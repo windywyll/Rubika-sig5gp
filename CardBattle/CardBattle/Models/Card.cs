@@ -53,6 +53,9 @@ namespace CardBattle.Models
             {
                 return 1;
             }
+
+            ComparisonMetrics.Instance.Signal();
+
             var valueComparison = this.Value.CompareTo(other.Value);
             if (valueComparison != 0)
             {
