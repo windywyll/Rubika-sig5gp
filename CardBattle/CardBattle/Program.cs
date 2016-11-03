@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using CardBattle.Models;
 
 namespace CardBattle
 {
@@ -9,6 +10,11 @@ namespace CardBattle
     {
         static void Main(string[] args)
         {
+            var spadesAce = new Card(Values.Ace, Suit.Spades);
+
+
+
+            Console.ReadLine();
         }
     }
 }
