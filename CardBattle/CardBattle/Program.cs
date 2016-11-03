@@ -15,9 +15,13 @@ namespace CardBattle
             Console.WriteLine("I created a card: " + spadesAce);
 
             var dealer = new CardDealer();
-            var randomCard = dealer.RandomCard();
 
-            Console.WriteLine("I drew a card: " + randomCard);
+            for (var i = 0; i < 100; i++)
+            {
+                var randomCard = dealer.RandomCard();
+
+                Console.WriteLine("I drew a card: " + randomCard);
+            }
 
             Console.ReadLine();
         }
