@@ -72,6 +72,18 @@ namespace CardBattle
             Console.WriteLine("It took me " + ComparisonMetrics.Instance.ComparisonCount + " comparisons to sort 100 decks with the merge sort.");
 
 
+            ComparisonMetrics.Instance.Reset();
+            for (var i = 0; i < 100; i++)
+            {
+                dealer.Shuffle();
+                var hand = dealer.Deal(52);
+                hand = Sort.QuickSort(hand);
+                //Console.WriteLine("My hand contains " + string.Join(", ", hand.Select(c => c.ToString()).ToArray()));
+
+            }
+            Console.WriteLine("It took me " + ComparisonMetrics.Instance.ComparisonCount + " comparisons to sort 100 decks with the quick sort.");
+
+
             Console.ReadLine();
         }
     }
