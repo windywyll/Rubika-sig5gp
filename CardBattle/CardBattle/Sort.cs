@@ -7,6 +7,12 @@ namespace CardBattle
 {
     public static class Sort
     {
+
+        /// <summary>
+        /// sorts the list using the insertion algorithm
+        /// </summary>
+        /// <typeparam name="T">The item types in the list to sort. Must implement ICOmparable"/></typeparam>
+        /// <param name="list">The list to sort.</param>
         public static void Insertion<T>(List<T> list) where T : IComparable<T>
         {
             for (var i = 0; i < list.Count; i++)

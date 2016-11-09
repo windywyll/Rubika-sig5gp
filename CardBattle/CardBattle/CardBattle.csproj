@@ -47,6 +47,8 @@
   <ItemGroup>
     <Compile Include="CardDealer.cs" />
     <Compile Include="ComparisonMetrics.cs" />
+    <Compile Include="Fibo.cs" />
+    <Compile Include="Helper.cs" />
     <Compile Include="Models\Card.cs" />
     <Compile Include="Models\Suit.cs" />
     <Compile Include="Models\Values.cs" />

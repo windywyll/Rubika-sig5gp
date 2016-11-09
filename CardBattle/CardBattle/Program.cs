@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using CardBattle.Models;
+using System.IO;
 
 namespace CardBattle
 {
@@ -10,6 +11,33 @@ namespace CardBattle
     {
         static void Main(string[] args)
         {
+            //MainCard();
+            MainFibo();
+        }
+
+        private static void MainFibo()
+        {
+            var i = 0;
+            Console.WriteLine("Fibo:");
+            foreach (var f in Fibo.FirstFibos(90))
+            {
+                Console.WriteLine(f);
+            }
+
+            Console.WriteLine("10° multiple de 5 de fibo: " + Fibo.NthMultipleFibo(10, 5));
+
+            Console.WriteLine("les diviseurs premiers de 23 sont: " + string.Join(", ", Fibo.Divisors(23).Select(d => d.ToString()).ToArray()));
+
+            Console.WriteLine("les diviseurs premiers des 15 premiers nombres de fibonnaccis multiples de 3 sont: " +
+                string.Join(", ", Fibo.DivisorsFromFibo(15, 3).Select(d => d.ToString()).ToArray())
+                );
+
+            Console.ReadLine();
+        }
+
+        public static void MainCard()
+        {
+
             var spadesAce = new Card(Values.Ace, Suit.Spades);
 
             Console.WriteLine("I created a card: " + spadesAce);
@@ -17,9 +45,15 @@ namespace CardBattle
             var dealer = new CardDealer();
             for (var i = 0; i < 100; i++)
             {
-                dealer.Shuffle();
-                var hand = dealer.Deal(52);
-                hand.Sort();
+                var deck = new List<Card>();
+                for (var j = 0; j < 10; j++)
+                {
+                    dealer.Shuffle();
+
+                    deck.AddRange(dealer.Deal(52));
+                }
+
+                deck.Sort();
 
                 //Console.WriteLine("My hand contains " + string.Join(", ", hand.Select(c => c.ToString()).ToArray()));
             }
@@ -29,9 +63,15 @@ namespace CardBattle
             ComparisonMetrics.Instance.Reset();
             for (var i = 0; i < 100; i++)
             {
-                dealer.Shuffle();
-                var hand = dealer.Deal(52);
-                Sort.Insertion(hand);
+                var deck = new List<Card>();
+                for (var j = 0; j < 10; j++)
+                {
+                    dealer.Shuffle();
+
+                    deck.AddRange(dealer.Deal(52));
+                }
+
+                Sort.Insertion(deck);
 
                 //Console.WriteLine("My hand contains " + string.Join(", ", hand.Select(c => c.ToString()).ToArray()));
 
@@ -41,9 +81,14 @@ namespace CardBattle
             ComparisonMetrics.Instance.Reset();
             for (var i = 0; i < 100; i++)
             {
-                dealer.Shuffle();
-                var hand = dealer.Deal(52);
-                Sort.Bubble(hand);
+                var deck = new List<Card>();
+                for (var j = 0; j < 10; j++)
+                {
+                    dealer.Shuffle();
+
+                    deck.AddRange(dealer.Deal(52));
+                }
+                Sort.Bubble(deck);
                 //Console.WriteLine("My hand contains " + string.Join(", ", hand.Select(c => c.ToString()).ToArray()));
 
             }
@@ -52,9 +97,14 @@ namespace CardBattle
             ComparisonMetrics.Instance.Reset();
             for (var i = 0; i < 100; i++)
             {
-                dealer.Shuffle();
-                var hand = dealer.Deal(52);
-                Sort.Shake(hand);
+                var deck = new List<Card>();
+                for (var j = 0; j < 10; j++)
+                {
+                    dealer.Shuffle();
+
+                    deck.AddRange(dealer.Deal(52));
+                }
+                Sort.Shake(deck);
                 //Console.WriteLine("My hand contains " + string.Join(", ", hand.Select(c => c.ToString()).ToArray()));
 
             }
@@ -63,9 +113,14 @@ namespace CardBattle
             ComparisonMetrics.Instance.Reset();
             for (var i = 0; i < 100; i++)
             {
-                dealer.Shuffle();
-                var hand = dealer.Deal(52);
-                hand = Sort.MergeSort(hand);
+                var deck = new List<Card>();
+                for (var j = 0; j < 10; j++)
+                {
+                    dealer.Shuffle();
+
+                    deck.AddRange(dealer.Deal(52));
+                }
+                deck = Sort.MergeSort(deck);
                 //Console.WriteLine("My hand contains " + string.Join(", ", hand.Select(c => c.ToString()).ToArray()));
 
             }
@@ -75,16 +130,39 @@ namespace CardBattle
             ComparisonMetrics.Instance.Reset();
             for (var i = 0; i < 100; i++)
             {
-                dealer.Shuffle();
-                var hand = dealer.Deal(52);
-                hand = Sort.QuickSort(hand);
+                var deck = new List<Card>();
+                for (var j = 0; j < 10; j++)
+                {
+                    dealer.Shuffle();
+
+                    deck.AddRange(dealer.Deal(52));
+                }
+                deck = Sort.QuickSort(deck);
                 //Console.WriteLine("My hand contains " + string.Join(", ", hand.Select(c => c.ToString()).ToArray()));
 
             }
             Console.WriteLine("It took me " + ComparisonMetrics.Instance.ComparisonCount + " comparisons to sort 100 decks with the quick sort.");
 
+            ComparisonMetrics.Instance.Reset();
+            for (var i = 0; i < 100; i++)
+            {
+                var deck = new List<Card>();
+                for (var j = 0; j < 10; j++)
+                {
+                    dealer.Shuffle();
+
+                    deck.AddRange(dealer.Deal(52));
+                }
+                deck = deck.OrderBy(c => c).ToList();
+                //Console.WriteLine("My hand contains " + string.Join(", ", hand.Select(c => c.ToString()).ToArray()));
+
+            }
+            Console.WriteLine("It took me " + ComparisonMetrics.Instance.ComparisonCount + " comparisons to sort 100 decks with the Linq sort.");
+
 
             Console.ReadLine();
+
         }
+
     }
 }
