@@ -28,7 +28,8 @@ namespace CardBattle
 
         private int numberOfPlayer, myId;
         private List<Card> hand;
-        private enum playStyle{ C, D, R };
+        private List<Card> cardPlayed;
+        private enum playStyle{ C, D, R, RH, RM, RL };
         private playStyle ps;
         private Random r;
 
@@ -42,6 +43,7 @@ namespace CardBattle
         {
             numberOfPlayer = playerCount;
             myId = position;
+            cardPlayed = new List<Card>();
         }
 
         public Card PlayCard()
@@ -60,9 +62,29 @@ namespace CardBattle
                 hand.RemoveAt(hand.Count-1);
             }
 
-            if (ps == playStyle.R)
+            if(ps == playStyle.R || ps == playStyle.RH || ps == playStyle.RM || ps == playStyle.RL)
             {
-                int indexMyCard = r.Next(hand.Count);
+                int maxRange = 0, minRange = hand.Count;
+
+                if( ps == playStyle.RH)
+                {
+                    maxRange = hand.Count;
+                    minRange = hand.Count - (hand.Count / 4);
+                }
+
+                if (ps == playStyle.RM)
+                {
+                    maxRange = hand.Count - (3 * hand.Count/8);
+                    minRange = 3 * hand.Count / 8;
+                }
+
+                if (ps == playStyle.RL)
+                {
+                    maxRange = hand.Count / 4;
+                    minRange = 0;
+                }
+
+                int indexMyCard = r.Next(minRange,maxRange);
                 myCard = hand[indexMyCard];
                 hand.RemoveAt(indexMyCard);
             }
@@ -72,7 +94,8 @@ namespace CardBattle
 
         public void ReceiveFoldResult(FoldResult result)
         {
-            throw new NotImplementedException();
+            cardPlayed.AddRange(result.CardsPlayed);
+            cardPlayed.Sort();
         }
 
         private void choosePlayStyle()
@@ -97,18 +120,46 @@ namespace CardBattle
                 }
             }
 
+            int doRandom = r.Next(2);
+
             if (foundFirstNine)
             {
                 if (i > (hand.Count - 1) / 2)
                 {
-                    ps = playStyle.C;
-                    realName = "Sarkhan Vol";
+                    if (doRandom == 0)
+                    {
+                        ps = playStyle.C;
+                        realName = "Sarkhan Vol";
+                    }
+                    
+                    if(doRandom == 1)
+                    {
+                        ps = playStyle.RL;
+                        realName = "Sarkhan Le Fou";
+                    }
                 }
 
                 if (i > (hand.Count - 1) / 2)
                 {
-                    ps = playStyle.D;
-                    realName = "Sarkhan Inaltéré";
+                    if (doRandom == 0)
+                    {
+                        ps = playStyle.D;
+                        realName = "Sarkhan Inaltéré";
+                    }
+
+                    if (doRandom == 1)
+                    {
+                        ps = playStyle.RH;
+                        realName = "Sarkhan Le Fou";
+                    }
+                }
+            }
+            else
+            {
+                if (doRandom == 1)
+                {
+                    ps = playStyle.RM;
+                    realName = "Sarkhan Le Fou";
                 }
             }
         }
