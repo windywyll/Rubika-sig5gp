@@ -64,7 +64,7 @@ namespace CardBattle
 
             if((ps == playStyle.R || ps == playStyle.RH || ps == playStyle.RM || ps == playStyle.RL) && hand.Count > 0)
             {
-                int maxRange = 0, minRange = hand.Count;
+                int maxRange = hand.Count, minRange = 0;
                 float tempCalc;
 
                 if( ps == playStyle.RH)
@@ -125,7 +125,7 @@ namespace CardBattle
             bool foundFirstNine = false;
             int i = 0;
 
-            while(!foundFirstNine || i == hand.Count)
+            while(!foundFirstNine && i < hand.Count)
             {
                 if(hand[i].Value == Values.Nine)
                 {
@@ -137,19 +137,19 @@ namespace CardBattle
                 }
             }
 
-            int doRandom = r.Next(2);
+            int doRandom = r.Next(100);
 
             if (foundFirstNine)
             {
                 if (i > (hand.Count - 1) / 2)
                 {
-                    if (doRandom == 0)
+                    if (doRandom >= 15)
                     {
                         ps = playStyle.C;
                         realName = "Sarkhan Vol";
                     }
                     
-                    if(doRandom == 1)
+                    if(doRandom < 15)
                     {
                         ps = playStyle.RL;
                         realName = "Sarkhan Le Fou";
@@ -158,13 +158,13 @@ namespace CardBattle
 
                 if (i > (hand.Count - 1) / 2)
                 {
-                    if (doRandom == 0)
+                    if (doRandom >= 15)
                     {
                         ps = playStyle.D;
                         realName = "Sarkhan Inaltéré";
                     }
 
-                    if (doRandom == 1)
+                    if (doRandom < 15)
                     {
                         ps = playStyle.RH;
                         realName = "Sarkhan Le Fou";
@@ -173,7 +173,7 @@ namespace CardBattle
             }
             else
             {
-                if (doRandom == 1)
+                if (doRandom < 15)
                 {
                     ps = playStyle.RM;
                     realName = "Sarkhan Le Fou";

@@ -18,8 +18,9 @@ namespace CardBattle
 
         private static void MaintTournament()
         {
-            var orga = new TournamentOrganiser(new IPlayer[] { new MaxValuePlayer(), new MaxValuePlayer() }, new CardDealer());
+            var orga = new TournamentOrganiser(new IPlayer[] { new Gaspard(), new Sarkhan() }, new CardDealer());
 
+            orga.GamesNumber = 999;
             orga.PlayTournament();
 
             Console.ReadLine();

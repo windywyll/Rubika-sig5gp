@@ -58,7 +58,9 @@ namespace CardBattle
             var winner = _players[winnerIndex];
 
             Console.WriteLine("Player " + winner.Name + " from " + winner.Author + " at position " + winnerIndex + " won the tournament.");
-    }
+            Console.WriteLine(string.Join(", ", Scores.Select(s => s.ToString()).ToArray()));
+
+        }
 
         public void PlayGame()
         {

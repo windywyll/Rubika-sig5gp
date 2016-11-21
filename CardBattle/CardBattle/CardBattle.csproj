@@ -49,6 +49,7 @@
     <Compile Include="ComparisonMetrics.cs" />
     <Compile Include="Fibo.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="Gaspard.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="IPlayer.cs" />
     <Compile Include="MaxValuePlayer.cs" />
