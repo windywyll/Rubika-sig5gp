@@ -50,37 +50,54 @@ namespace CardBattle
         {
             Card myCard = null;
 
-            if(ps == playStyle.C)
+            if(ps == playStyle.C && hand.Count > 0)
             {
                 myCard = hand[0];
                 hand.RemoveAt(0);
             }
 
-            if (ps == playStyle.D)
+            if (ps == playStyle.D && hand.Count > 0)
             {
                 myCard = hand[hand.Count-1];
                 hand.RemoveAt(hand.Count-1);
             }
 
-            if(ps == playStyle.R || ps == playStyle.RH || ps == playStyle.RM || ps == playStyle.RL)
+            if((ps == playStyle.R || ps == playStyle.RH || ps == playStyle.RM || ps == playStyle.RL) && hand.Count > 0)
             {
                 int maxRange = 0, minRange = hand.Count;
+                float tempCalc;
 
                 if( ps == playStyle.RH)
                 {
                     maxRange = hand.Count;
-                    minRange = hand.Count - (hand.Count / 4);
+
+                    tempCalc = hand.Count / 4.0f;
+
+                    if (tempCalc < 1)
+                        tempCalc = 1;
+
+                    minRange = hand.Count - (int) tempCalc;
                 }
 
                 if (ps == playStyle.RM)
                 {
-                    maxRange = hand.Count - (3 * hand.Count/8);
-                    minRange = 3 * hand.Count / 8;
+                    tempCalc = 3 * hand.Count / 8;
+
+                    if (tempCalc < 1)
+                        tempCalc = 0;
+
+                    maxRange = hand.Count - (int) tempCalc;
+                    minRange = (int) tempCalc;
                 }
 
                 if (ps == playStyle.RL)
                 {
-                    maxRange = hand.Count / 4;
+                    tempCalc = hand.Count / 4.0f;
+
+                    if (tempCalc < 1)
+                        tempCalc = 1;
+
+                    maxRange = (int) tempCalc;
                     minRange = 0;
                 }
 
