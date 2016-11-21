@@ -8,6 +8,9 @@ namespace CardBattle
 {
     public interface IPlayer
     {
+        string Name { get;}
+        string Author { get; }
+
         void Initialize(int playerCount);
         void Deal(IEnumerable<Card> cards);
         int PlayCard();

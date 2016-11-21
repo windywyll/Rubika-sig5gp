@@ -9,5 +9,6 @@ namespace CardBattle.Models
     {
         IEnumerable<Card> CardsPlayed { get; set; }
         int Winner { get; set; }
+        string WinnerName { get; set; }
     }
 }
