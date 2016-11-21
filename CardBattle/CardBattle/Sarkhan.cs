@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using CardBattle.Models;
+using CardBattle.Infrastructure;
 
-namespace CardBattle
+namespace CardBattle.Player
 {
     class Sarkhan : IPlayer
     {
@@ -31,7 +32,9 @@ namespace CardBattle
         private List<Card> cardPlayed;
         private enum playStyle{ C, D, R, RH, RM, RL };
         private playStyle ps;
-        private Random r;
+        private RandomProvider r;
+
+
 
         public void Deal(IEnumerable<Card> cards)
         {
@@ -119,7 +122,7 @@ namespace CardBattle
         {
             hand.Sort();
             ps = playStyle.R;
-            r = new Random();
+            r = RandomProvider.SingleInstance();
             realName = "Sarkhan Le Fou";
 
             bool foundFirstNine = false;

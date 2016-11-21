@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using CardBattle.Models;
+using CardBattle.Infrastructure;
 
-namespace CardBattle
+namespace CardBattle.Player
 {
-    class Gaspard : IPlayer //Version 1.0
+    class Gaspard : IPlayer //Version 1.1
     {
         public string Author
         {
@@ -19,9 +20,12 @@ namespace CardBattle
         }
 
         List<Card> myCards;
+        RandomProvider rnd = new RandomProvider();
         public void Deal(IEnumerable<Card> cards)
         {
             myCards = new List<Card>(cards);
+            GM = (gameMode)rnd.Random.Next((int)gameMode.count);
+            //Console.WriteLine("Gaspard is " + GM.ToString());
         }
 
         int nbPlayer;
@@ -36,34 +40,33 @@ namespace CardBattle
         {
             random,
             better,
-            worst,
-            mid,
+            //worst,
+            middle,
             count
         }
         gameMode GM;
 
         public Card PlayCard()
         {
-            Random rnd = new Random();
-            GM = (gameMode) rnd.Next((int) gameMode.count);
+            //GM = (gameMode) rnd.Next((int) gameMode.count);
             int CardId = 0;
             Card CardPlayed = myCards.ElementAt(CardId);
             myCards.Sort();
             switch (GM)
             {
                 case gameMode.random:
-                    CardId = rnd.Next(myCards.Count());
+                    CardId = rnd.Random.Next(myCards.Count());
                     CardPlayed = myCards.ElementAt(CardId);
                 break;
                 case gameMode.better:
                     CardId = myCards.Count()-1;
                     CardPlayed = myCards.ElementAt(CardId);
                 break;
-                case gameMode.worst:
+                /*case gameMode.worst:
                     CardId = 0;
                     CardPlayed = myCards.ElementAt(CardId);
-                break;
-                case gameMode.mid:
+                break;*/
+                case gameMode.middle:
                     CardId = myCards.Count()/2;
                     CardPlayed = myCards.ElementAt(CardId);
                 break;
@@ -79,16 +82,16 @@ namespace CardBattle
             nbGame++;
             if (result.WinnerName != "Gaspard")
             {
-                Console.WriteLine(result.WinnerName + " is a cheater !");
+                //Console.WriteLine(result.WinnerName + " is a cheater !");
             }
             else
             {
-                if (nbWin > 0)
+               /* if (nbWin > 0)
                 {
                     if (nbGame / nbWin > 0.5) { Console.WriteLine("Gaspard always win !"); }
                     else { Console.WriteLine("Gaspard win again !"); }
                 }
-                else { Console.WriteLine("Gaspard win !"); }
+                else { Console.WriteLine("Gaspard win !"); }*/
                 nbWin++;
             }
         }
