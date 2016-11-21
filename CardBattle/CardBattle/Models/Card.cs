@@ -3,30 +3,40 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace CardBattle
+namespace CardBattle.Models
 {
     public class Card : IEquatable<Card>, IComparable<Card>
     {
-        public ValueCard value { get; private set; }
-        public ColorEnum color { get; private set; }
-
-        public Card(ValueCard _val, ColorEnum _col)
+        public Card(Values value, Suit suit)
         {
-            value = _val;
-            color = _col;
+            _suit = suit;
+            Value = value;
         }
+
+        private readonly Suit _suit;
+        public Suit Suit
+        {
+            get
+            {
+                return _suit;
+            }
+        }
+
+        public Values Value { get; private set; }
 
         public override string ToString()
         {
-            return value + " OF " + color;
+            return Value + " of " + Suit;
+            ;
         }
 
         public bool Equals(Card other)
         {
             if (Object.ReferenceEquals(other, null))
+            {
                 return false;
-            
-            return (this.color == other.color && this.value == other.value);
+            }
+            return this.Suit == other.Suit && this.Value == other.Value;
         }
 
         public override bool Equals(object obj)
@@ -34,77 +44,46 @@ namespace CardBattle
             var otherCard = obj as Card;
 
             return Equals(otherCard);
-        }
 
-        public static bool operator == (Card card1, Card card2)
-        {
-            if(Object.ReferenceEquals(card1, null))
-            {
-                return Object.ReferenceEquals(card2, null);
-            }
-
-            return card1.Equals(card2);
-        }
-
-        public static bool operator != (Card card1, Card card2)
-        {
-            return !(card1 == card2);
         }
 
         public int CompareTo(Card other)
         {
-            if (other == null)
+            if (Object.ReferenceEquals(other, null))
+            {
                 return 1;
+            }
 
-            if (this.value.CompareTo(other.value) != 0)
-                return this.value.CompareTo(other.value);
+            ComparisonMetrics.Instance.Signal();
+
+            var valueComparison = this.Value.CompareTo(other.Value);
+            if (valueComparison != 0)
+            {
+                return valueComparison;
+            }
             else
-                return this.color.CompareTo(other.color);
+            {
+                return this.Suit.CompareTo(other.Suit);
+            }
         }
 
-        public static bool operator > (Card card1, Card card2)
+        public static bool operator ==(Card card1, Card card2)
         {
-            if (card1 == null)
-                return false;
-
-            if (card1.CompareTo(card2) > 0)
-                return true;
-            return false;
+            if (Object.ReferenceEquals(card1, null))
+            {
+                return Object.ReferenceEquals(card2, null);
+            }
+            return card1.Equals(card2);
         }
 
-        public static bool operator < (Card card1, Card card2)
+        public static bool operator !=(Card card1, Card card2)
         {
-            if (card1 == null)
-                return true;
-
-            if (card1.CompareTo(card2) < 0)
-                return true;
-            return false;
-        }
-
-        public static bool operator >= (Card card1, Card card2)
-        {
-            if (card1 == null)
-                return false;
-
-            if (card1.CompareTo(card2) >= 0)
-                return true;
-            return false;
-        }
-
-        public static bool operator <= (Card card1, Card card2)
-        {
-            if (card1 == null)
-                return true;
-
-            if (card1.CompareTo(card2) <= 0)
-                return true;
-            return false;
+            return !(card1 == card2);
         }
 
         public override int GetHashCode()
         {
-            return 3 * value.GetHashCode() + color.GetHashCode();
+            return 3 * Value.GetHashCode() + Suit.GetHashCode();
         }
     }
 }

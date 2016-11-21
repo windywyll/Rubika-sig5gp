@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CardBattle.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,98 +8,116 @@ namespace CardBattle
 {
     public class CardDealer
     {
-        private readonly Random rand = new Random();
-        private static readonly int suitsCount = Enum.GetValues(typeof(ColorEnum)).Length;
-        private static readonly int valuesCount = Enum.GetValues(typeof(ValueCard)).Length;
-        private List<Card> deck;
+        private readonly Random _rand = new Random();
+        private static readonly int _suitsCount = Enum.GetValues(typeof(Suit)).Length;
+        private static readonly int _valuesCount = Enum.GetValues(typeof(Values)).Length;
+
+        private List<Card> _availableCards;
+        private readonly Object _lock = new object();
+        private List<Card> AvailableCards
+        {
+            get
+            {
+                if (_availableCards == null)
+                {
+                    lock (this._lock)
+                    {
+                        if (_availableCards == null)
+                        {
+                            _availableCards = new List<Card>();
+                        }
+                    }
+                }
+                return _availableCards;
+            }
+
+            set
+            {
+                this._availableCards = value;
+            }
+        }
 
         public CardDealer()
         {
-            createDeck();
+            Shuffle();
         }
 
-        public void regenerateDeck()
+        public int RemainingCards
         {
-            createDeck();
-        }
-
-        private void createDeck()
-        {
-            deck = new List<Card>();
-            
-            foreach(ColorEnum col in Enum.GetValues(typeof(ColorEnum)))
+            get
             {
-                foreach (ValueCard val in Enum.GetValues(typeof(ValueCard)))
-                {
-                    deck.Add(new Card(val, col));
-                }
+                return AvailableCards.Count;
             }
         }
 
-        public Card randomCard()
-        {
-            var suit = (ColorEnum) rand.Next(suitsCount);
-            var value = (ValueCard) rand.Next(valuesCount);
 
-            return new Card(value, suit);
+
+        public Card RandomCard()
+        {
+            if (AvailableCards.Count == 0)
+            {
+                throw new InvalidOperationException("Nocard available.");
+            }
+
+            var index = _rand.Next(AvailableCards.Count);
+
+            var result = AvailableCards[index];
+
+            AvailableCards.RemoveAt(index);
+
+            return result;
         }
 
-        /*public List<Card> Deal(int n)
+        public void Shuffle()
         {
-            List<Card> hand = new List<Card>();
-            Card temp;
-            bool alreadyInHand;
-
-            for(int i = 0; i < n; i++)
+            var list = new List<Card>();
+            for (var i = 0; i < _suitsCount; i++)
             {
-                alreadyInHand = true;
-
-                while(alreadyInHand)
+                for (var j = 0; j < _valuesCount; j++)
                 {
-                    temp = randomCard();
-                    if (!hand.Contains(temp))
-                    {
-                        alreadyInHand = false;
-                        hand.Add(temp);
-                    }
+                    list.Add(new Card((Values)j, (Suit)i));
                 }
             }
 
-            return hand;
-        }*/
+            AvailableCards = list;
+        }
 
         public List<Card> Deal(int n)
         {
-            List<Card> hand = new List<Card>();
-            int index;
-
-            if(n > deck.Count)
+            if (n > AvailableCards.Count)
             {
-                throw new ArgumentException("not enough card in deck");
+                throw new ArgumentException("Not enough cards available");
             }
 
-            for(int i = 0; i < n; i++)
+            var result = new List<Card>();
+            for (var i = 0; i < n; i++)
             {
-                index = rand.Next(deck.Count);
-                hand.Add(deck[index]);
-                deck.RemoveAt(index);
+                result.Add(RandomCard());
             }
 
-            return hand;
+            return result;
         }
 
-        public IEnumerable<Card> Frob(IEnumerable<Card> deck)
+        public IEnumerable<Card> Frob(IEnumerable<Card> input)
         {
-            IEnumerable<Card> list = deck.Where<Card>(card => (card.color == ColorEnum.HEARTS || card.color == ColorEnum.DIAMONDS));
-
-            list = list.Select(card =>
+            foreach(var card in input)
             {
-                if (card.value == ValueCard.ACE)
-                    return new Card(ValueCard.TWO, card.color);
-                return new Card((card.value + 1), card.color);
-            });
+                if (card.Suit == Suit.Diamonds || card.Suit == Suit.Hearts)
+                {
+                    yield return NextCard(card);
+                }
+            }
+        }
 
-            return list;
+        private Card NextCard(Card card)
+        {
+            return new Card((Values)((int)(card.Value + 1) % _valuesCount), card.Suit); 
+        }
+
+        public IEnumerable<Card> Frob2(IEnumerable<Card> input)
+        {
+            return input.Where(c => c.Suit == Suit.Diamonds || c.Suit == Suit.Hearts)
+                .Select(NextCard);
         }
     }
 }
