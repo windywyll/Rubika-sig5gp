@@ -49,7 +49,9 @@
     <Compile Include="ComparisonMetrics.cs" />
     <Compile Include="Fibo.cs" />
     <Compile Include="Helper.cs" />
+    <Compile Include="IPlayer.cs" />
     <Compile Include="Models\Card.cs" />
+    <Compile Include="Models\FoldResult.cs" />
     <Compile Include="Models\Suit.cs" />
     <Compile Include="Models\Values.cs" />
     <Compile Include="Program.cs" />

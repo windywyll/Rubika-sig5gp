@@ -38,6 +38,10 @@ namespace CardBattle
         public static void MainCard()
         {
 
+            Func<Values, Card> heartsFactory = (v => new Card(v, Suit.Hearts));
+
+            var nineOfHearts = heartsFactory(Values.Nine);
+
             var spadesAce = new Card(Values.Ace, Suit.Spades);
 
             Console.WriteLine("I created a card: " + spadesAce);
