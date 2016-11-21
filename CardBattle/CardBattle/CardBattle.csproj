@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CardSorter.cs" />
+    <Compile Include="Fibonacci.cs" />
     <Compile Include="Models\Card.cs" />
     <Compile Include="CardDealer.cs" />
     <Compile Include="Models\Color.cs" />

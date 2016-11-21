@@ -37,10 +37,10 @@ namespace CardBattle
 
             //Console.WriteLine("Random Card : " + c);
 
-            List<Card> hand = dealer.Deal(10);
-            Console.WriteLine("my hand bs : " + string.Join(", ", hand.Select(c => c.ToString()).ToArray()));
-            hand = CardSorter.fusionSort(hand);
-            Console.WriteLine("my hand as : " + string.Join(", ", hand.Select(c => c.ToString()).ToArray()));
+            //List<Card> hand = dealer.Deal(10);
+            //Console.WriteLine("my hand bs : " + string.Join(", ", hand.Select(c => c.ToString()).ToArray()));
+            //hand = dealer.Frob(hand).ToList();
+            //Console.WriteLine("my hand as : " + string.Join(", ", hand.Select(c => c.ToString()).ToArray()));
 
             /*var watch = new Stopwatch();
             watch.Start();
@@ -51,6 +51,20 @@ namespace CardBattle
             }
             watch.Stop();
             Console.WriteLine(watch.ElapsedMilliseconds);*/
+
+            //List<ulong> fiboseq = FibonacciFuncs.FirstNFibo(90).ToList();
+            //int i = 0;
+            //foreach (ulong n in fiboseq)
+            //{
+            //    Console.WriteLine("Fibo " + i + " :" + n);
+            //    i++;
+            //}
+
+            //Console.WriteLine(FibonacciFuncs.NthMultipleFibo(10, 5));
+
+            //Console.WriteLine("Div premiers : " + string.Join(", ", FibonacciFuncs.Divisors(60).Select(d => d.ToString()).ToArray()));
+
+            //Console.WriteLine("Div premiers : " + string.Join(", ", FibonacciFuncs.DivisorsFromFibo(15, 3).Select(d => d.ToString()).ToArray()));
 
             Console.ReadLine();
         }

@@ -143,12 +143,36 @@ namespace CardBattle
             return toSort;
         }
 
-        public static List<Card> quickSort(List<Card> deck)
+        public static List<T> QuickSort<T>(List<T> list) where T : IComparable<T>
         {
-            List<Card> toSort = deck;
-            
+            if (list.Count <= 1)
+            {
+                return list;
+            }
 
-            return toSort;
+            var result = new List<T>();
+
+            var beforeList = new List<T>();
+            var afterList = new List<T>();
+
+            var pivot = list[0];
+            foreach (var item in list.Skip(1))
+            {
+                if (pivot.CompareTo(item) > 0)
+                {
+                    beforeList.Add(item);
+                }
+                else
+                {
+                    afterList.Add(item);
+                }
+            }
+
+            result.AddRange(QuickSort(beforeList));
+            result.Add(pivot);
+            result.AddRange(QuickSort(afterList));
+
+            return result;
         }
     }
 }

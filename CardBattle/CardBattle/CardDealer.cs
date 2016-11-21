@@ -86,5 +86,19 @@ namespace CardBattle
 
             return hand;
         }
+
+        public IEnumerable<Card> Frob(IEnumerable<Card> deck)
+        {
+            IEnumerable<Card> list = deck.Where<Card>(card => (card.color == ColorEnum.HEARTS || card.color == ColorEnum.DIAMONDS));
+
+            list = list.Select(card =>
+            {
+                if (card.value == ValueCard.ACE)
+                    return new Card(ValueCard.TWO, card.color);
+                return new Card((card.value + 1), card.color);
+            });
+
+            return list;
+        }
     }
 }
