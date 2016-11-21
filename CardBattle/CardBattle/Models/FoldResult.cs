@@ -7,8 +7,16 @@ namespace CardBattle.Models
 {
     public class FoldResult
     {
-        IEnumerable<Card> CardsPlayed { get; set; }
-        int Winner { get; set; }
-        string WinnerName { get; set; }
+        public FoldResult(IEnumerable<Card> cards, int winnerIndex, string winnerName)
+        {
+            CardsPlayed = cards;
+            Winner = winnerIndex;
+            WinnerName = winnerName;
+
+        }
+
+        public IEnumerable<Card> CardsPlayed { get; private set; }
+        public int Winner { get; private set; }
+        public string WinnerName { get; private set; }
     }
 }
