@@ -41,7 +41,7 @@ namespace CardBattle
 
             //List<Card> hand = dealer.Deal(10);
             //Console.WriteLine("my hand bs : " + string.Join(", ", hand.Select(c => c.ToString()).ToArray()));
-            //hand = dealer.Frob(hand).ToList();
+            //hand.Sort();
             //Console.WriteLine("my hand as : " + string.Join(", ", hand.Select(c => c.ToString()).ToArray()));
 
             /*var watch = new Stopwatch();

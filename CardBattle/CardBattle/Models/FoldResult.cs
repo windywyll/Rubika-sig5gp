@@ -7,8 +7,8 @@ namespace CardBattle.Models
 {
     public class FoldResult
     {
-        IEnumerable<Card> CardsPlayed { get; set; }
-        int Winner { get; set; }
-        string WinnerName { get; set; }
+        public IEnumerable<Card> CardsPlayed { get; private set; }
+        public int Winner { get; private set; }
+        public string WinnerName { get; private set; }
     }
 }

@@ -13,7 +13,7 @@ namespace CardBattle
 
         void Initialize(int playerCount, int position);
         void Deal(IEnumerable<Card> cards);
-        int PlayCard();
+        Card PlayCard();
         void ReceiveFoldResult(FoldResult result);
     }
 }
