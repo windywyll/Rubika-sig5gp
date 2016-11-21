@@ -11,7 +11,7 @@ namespace CardBattle
         string Name { get;}
         string Author { get; }
 
-        void Initialize(int playerCount);
+        void Initialize(int playerCount, int position);
         void Deal(IEnumerable<Card> cards);
         int PlayCard();
         void ReceiveFoldResult(FoldResult result);
